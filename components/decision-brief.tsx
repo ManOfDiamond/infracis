@@ -158,7 +158,7 @@ export default function DecisionBrief({ report, onCompare }: DecisionBriefProps)
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-[#718275]">
           Source timestamps, evidence records, limitations, and the full checklist remain available below. Source availability
-          and data completeness describe this report's coverage—not the property&apos;s quality, safety, legality, or value.
+          and data completeness describe this report&apos;s coverage—not the property&apos;s quality, safety, legality, or value.
         </p>
       </div>
     </section>
