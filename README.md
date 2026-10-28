@@ -63,7 +63,7 @@ Existing products already offer real-estate analytics and location/risk layers. 
 - Map: Leaflet with properly attributed OpenStreetMap data
 - Backend/data: Supabase (Postgres, Auth, Storage, Row Level Security)
 - Geospatial utilities: PostGIS where enabled, otherwise well-tested geospatial helpers
-- AI: optional provider adapter for evidence-grounded explanations; deterministic calculations remain outside the model
+- AI: not active in this build; a future optional evidence-grounded provider adapter would require separate implementation and tests. Current findings use deterministic rules and templates.
 - Deployment: Vercel or another supported host after local build and environment configuration are verified
 
 ## Current implementation status
