@@ -33,14 +33,15 @@ Freshness thresholds are source-specific. A live weather observation, annual dat
 
 Stale data may remain useful as historical context, but must be labeled as such.
 
-## AI grounding
+## Future AI grounding (not active in this build)
+The current implementation uses deterministic rules and templates in `lib/synthesizer.ts`; it does not call an LLM. If an AI provider is introduced later:
 - Pass only normalized evidence and calculations required for the task.
 - Require every factual claim to reference one or more evidence IDs.
 - Validate returned IDs against the input bundle.
 - Reject unsupported factual claims; do not fill gaps from model memory.
 - Render uncertainty and conflicting sources explicitly.
 - AI may summarize or explain. It must not invent source URLs, statistics, hazard classifications, property prices, crime data, or legal conclusions.
-- Provide deterministic fallback rendering when AI is unavailable.
+- Keep deterministic fallback rendering when AI is unavailable.
 
 ## Location and risk language
 - Use “within X metres” only when the distance calculation and coordinate source support it.
