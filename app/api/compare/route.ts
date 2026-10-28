@@ -64,9 +64,18 @@ export async function POST(request: NextRequest) {
   const input = body as { queryA?: unknown; queryB?: unknown; preference?: unknown };
   const queryA = typeof input.queryA === "string" ? input.queryA.trim() : "";
   const queryB = typeof input.queryB === "string" ? input.queryB.trim() : "";
-  const preference = typeof input.preference === "string" && validPreferences.has(input.preference as PreferenceProfile)
-    ? input.preference as PreferenceProfile
-    : "balanced";
+  const preference: PreferenceProfile = input.preference === undefined
+    ? "balanced"
+    : typeof input.preference === "string" && validPreferences.has(input.preference as PreferenceProfile)
+      ? input.preference as PreferenceProfile
+      : "invalid" as PreferenceProfile;
+
+  if (!validPreferences.has(preference)) {
+    return NextResponse.json(
+      { error: "Preference must be one of balanced, family, transit, healthcare, or quiet." },
+      { status: 400 }
+    );
+  }
 
   if (!queryA || !queryB) {
     return NextResponse.json(
