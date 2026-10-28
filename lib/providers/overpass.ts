@@ -29,7 +29,7 @@ export async function fetchNearbyAmenities(
 out center tags 100;`;
 
   const body = new URLSearchParams({ data: query });
-  const overpassUrl = process.env.OVERPASS_API_URL || "https://overpass.private.coffee/api/interpreter";
+  const overpassUrl = process.env.OVERPASS_API_URL || "https://overpass-api.de/api/interpreter";
   const response = await fetch(overpassUrl, {
     method: "POST",
     headers: {
