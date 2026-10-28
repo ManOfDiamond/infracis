@@ -87,7 +87,7 @@ export default function DecisionBrief({ report, onCompare }: DecisionBriefProps)
           <div>
             <h4 className="text-sm font-bold text-[#143023]">Your next three checks</h4>
             <p className="mt-1 text-xs leading-relaxed text-[#66776b]">
-              Start with the checklist's highest-priority items. Confirm details directly with official records,
+              Start with the checklist&apos;s highest-priority items. Confirm details directly with official records,
               facility operators, and an on-site visit where appropriate.
             </p>
           </div>
