@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardCheck, Database, ExternalLink, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardCheck, Database, ShieldCheck } from "lucide-react";
 import type { LocationReport } from "@/lib/types";
 
 interface DecisionBriefProps {
