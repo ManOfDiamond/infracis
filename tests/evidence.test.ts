@@ -116,6 +116,19 @@ describe("Evidence Engine & Provenance Integrity", () => {
     expect(modeled.every((item) => item.classification === "provider_model")).toBe(true);
   });
 
+  it("labels air-quality and elevation findings as provider-model output", () => {
+    const report = assembleLocationReport(
+      "Indiranagar",
+      mockLocation,
+      mockWeather,
+      mockAirQuality,
+      mockAmenities,
+      "2026-10-28T01:00:00Z"
+    );
+    expect(report.findings.find((finding) => finding.id === "fnd-air-quality")?.classification).toBe("provider_model");
+    expect(report.findings.find((finding) => finding.id === "fnd-topography")?.classification).toBe("provider_model");
+  });
+
   it("strictly validates that every finding references valid evidence IDs in the report", () => {
     const report = assembleLocationReport(
       "Indiranagar",
