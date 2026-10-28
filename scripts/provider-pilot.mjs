@@ -46,7 +46,7 @@ const overpassEndpoints = (configuredOverpassEndpoints.length
       throw new Error("OVERPASS_API_URLS must contain valid HTTPS URLs.");
     }
     if (parsedEndpoint.protocol !== "https:") throw new Error("OVERPASS_API_URLS must use HTTPS.");
-    return parsedEndpoint.toString();
+    return { url: parsedEndpoint.toString(), label: parsedEndpoint.host };
   });
 
 async function checkJson(url, options = {}, timeoutMs = 12_000) {
@@ -137,7 +137,8 @@ for (const query of locations) {
     const overpassQuery = `[out:json][timeout:10];(nwr(around:1200,${lat},${lon})[amenity~"^(school|kindergarten|college|university|hospital|clinic|pharmacy|bank|atm|marketplace|supermarket|bus_station|police|fire_station|library|place_of_worship)$"];nwr(around:1200,${lat},${lon})[highway="bus_stop"];nwr(around:1200,${lat},${lon})[railway~"^(station|subway_entrance|tram_stop)$"];nwr(around:1200,${lat},${lon})[leisure~"^(park|playground)$"];);out center tags 100;`;
     let overpass = null;
     const overpassAttempts = [];
-    for (const endpoint of overpassEndpoints) {
+    for (const endpointConfig of overpassEndpoints) {
+      const endpoint = endpointConfig.url;
       const probe = await checkJson(endpoint, {
         method: "POST",
         headers: {
@@ -148,14 +149,14 @@ for (const query of locations) {
       }, 7000);
       const elements = probe.ok && Array.isArray(probe.body?.elements) ? probe.body.elements : null;
       overpassAttempts.push({
-        endpoint,
+        endpoint: endpointConfig.label,
         ok: elements !== null,
         status: probe.status ?? null,
         elapsedMs: probe.elapsedMs,
         error: elements !== null ? null : probe.error ?? "Invalid or missing elements array"
       });
       if (elements !== null) {
-        overpass = { ...probe, endpoint, elements };
+        overpass = { ...probe, endpoint: endpointConfig.label, elements };
         break;
       }
     }
