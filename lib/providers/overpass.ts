@@ -116,7 +116,7 @@ out center tags 100;`;
     })
     // A record without a valid point/center cannot support a proximity claim.
     // Do not assign it an invented distance or let it become the "nearest" result.
-    .filter((item) => item.distanceMeters !== null && item.lat !== null && item.lon !== null)
+    .filter((item) => item.lat !== null && item.lon !== null && item.distanceMeters <= radiusMeters)
     .sort((a, b) => a.distanceMeters - b.distanceMeters);
 
   const byGroup = {
