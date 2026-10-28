@@ -197,7 +197,7 @@ export default function AnalyzeClient() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-800">
-                        Live Audited Report
+                        Evidence Report
                       </span>
                       <span className="text-xs text-[#718275]">
                         Retrieved {new Date(report.generatedAt).toLocaleString()}
@@ -344,7 +344,7 @@ export default function AnalyzeClient() {
                     </h3>
                   </div>
                   <p className="mt-1 text-xs text-[#647468]">
-                    Every finding is tied directly to verified source evidence IDs. No hallucinated risk statements.
+                    Each finding references the evidence records used to derive it. Open the cited sources and review limitations before relying on a claim.
                   </p>
 
                   <div className="mt-5 space-y-3">
