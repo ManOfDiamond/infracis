@@ -14,7 +14,7 @@ A user searches for a place, reviews nearby amenities and available environmenta
 
 - **Observed facts** — retrieved from a named source.
 - **Calculated metrics** — derived using documented formulas.
-- **Model-assisted interpretations** — AI-generated explanations grounded in retrieved evidence.
+- **Rule-based interpretations** — deterministic explanations assembled from retrieved evidence IDs. This build does not call an LLM or generate AI-written summaries.
 - **Unknowns** — unavailable, stale, incomplete, or unverified information.
 
 The first release is not a property valuation engine, legal title verification service, safety guarantee, or investment recommendation.
