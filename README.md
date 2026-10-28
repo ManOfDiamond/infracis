@@ -10,7 +10,7 @@ Infracis helps a home buyer or renter investigate a location before committing t
 
 The first release focuses on **one user: a home buyer/renter evaluating a specific location**.
 
-A user searches for a place, reviews nearby amenities and available environmental/hazard context, compares it with a second location, and receives a report that separates:
+A user searches for a place, reviews nearby amenities and available environmental and mapped-amenity context, compares it with a second location, and receives a report that separates:
 
 - **Observed facts** — retrieved from a named source.
 - **Calculated metrics** — derived using documented formulas.
