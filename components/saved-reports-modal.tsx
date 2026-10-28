@@ -21,12 +21,15 @@ function isStoredReport(value: unknown): value is LocationReport {
     typeof report.scores.completenessScore === "number";
 }
 
+export function parseStoredReports(value: unknown): LocationReport[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(isStoredReport).slice(0, 20);
+}
+
 function readStoredReports(): LocationReport[] {
   const raw = localStorage.getItem("infracis_saved_reports");
   if (!raw) return [];
-  const parsed: unknown = JSON.parse(raw);
-  if (!Array.isArray(parsed)) return [];
-  return parsed.filter(isStoredReport).slice(0, 20);
+  return parseStoredReports(JSON.parse(raw));
 }
 
 export function saveReportToStorage(report: LocationReport): boolean {
