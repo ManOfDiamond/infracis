@@ -73,7 +73,7 @@ def test_ready_fails_closed_when_redis_is_unavailable(client: TestClient, monkey
     monkeypatch.setattr(main, "redis_client", UnavailableRedis())
     response = client.get("/health/ready")
     assert response.status_code == 503
-    assert response.json() == {"detail": "Redis is temporarily unavailable."}
+    assert response.json() == {"detail": "Redis is not reachable."}
     assert "private redis endpoint" not in response.text
 
 
