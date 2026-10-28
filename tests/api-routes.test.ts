@@ -82,6 +82,16 @@ describe("API route input and availability contracts", () => {
     expect((await response.json()).error).toMatch(/180 characters/i);
   });
 
+  it("rejects unsupported comparison preferences instead of silently changing the user's choice", async () => {
+    const response = await compare(request("/api/compare", {
+      queryA: "Delhi",
+      queryB: "Noida",
+      preference: "crime"
+    }));
+    expect(response.status).toBe(400);
+    expect((await response.json()).error).toMatch(/preference must be one of/i);
+  });
+
   it("returns 503 rather than comparing without shared rate limiting", async () => {
     enforceRateLimit.mockResolvedValue(null);
     const response = await compare(request("/api/compare", { queryA: "Delhi", queryB: "Noida" }));
