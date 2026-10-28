@@ -136,6 +136,30 @@ describe("Evidence Engine & Provenance Integrity", () => {
     }
   });
 
+  it("does not treat a capped amenity sample as proof of nearest-facility absence", () => {
+    const cappedAmenities: AmenitiesSummary = {
+      ...mockAmenities,
+      totalCount: 100,
+      resultLimitReached: true,
+      nearest: {},
+      items: []
+    };
+    const report = assembleLocationReport(
+      "Dense Urban Locality",
+      mockLocation,
+      null,
+      null,
+      cappedAmenities,
+      "2026-10-28T01:00:00Z"
+    );
+
+    expect(report.scores.transitAccessibilityScore).toBeNull();
+    expect(report.scores.healthcareAccessScore).toBeNull();
+    expect(report.unknowns.some((item) => item.includes("100-element output cap"))).toBe(true);
+    expect(report.findings.some((finding) => finding.headline.includes("Public Transit Access Unverified in Open Feeds"))).toBe(false);
+    expect(report.evidence.find((item) => item.id === "ev-amenity-total")?.limitations).toContain("partial sample");
+  });
+
   it("reports explicit unknowns when optional data layers are null", () => {
     const reportWithoutAirOrAmenities = assembleLocationReport(
       "Remote Village",
