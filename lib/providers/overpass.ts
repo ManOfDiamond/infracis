@@ -96,7 +96,7 @@ out center tags 100;`;
       const safeLon = validCoordinates ? itemLon : null;
       const distance = validCoordinates
           ? calculateHaversineDistance(lat, lon, safeLat!, safeLon!)
-          : null;
+          : radiusMeters;
 
       const name =
         elem.tags?.name ||
