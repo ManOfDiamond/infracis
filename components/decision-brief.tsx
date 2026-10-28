@@ -42,7 +42,7 @@ export default function DecisionBrief({ report, onCompare }: DecisionBriefProps)
           What to verify before you commit
         </h3>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[#526357]">
-          A practical next-step summary for {report.location.label}, generated from this report's retrieved sources,
+          A practical next-step summary for {report.location.label}, generated from this report&apos;s retrieved sources,
           explicit unknowns, and due-diligence checklist—not from a synthetic property score.
         </p>
       </div>
@@ -56,7 +56,7 @@ export default function DecisionBrief({ report, onCompare }: DecisionBriefProps)
             {availableSources}<span className="text-sm font-medium text-[#6b7b70]"> / {report.sources.length}</span>
           </p>
           <p className="mt-1 text-xs leading-relaxed text-[#66776b]">
-            {unavailableSources === 0
+            {report.sources.length > 0 && unavailableSources === 0
               ? "All listed sources returned data for this report."
               : `${unavailableSources} listed source${unavailableSources === 1 ? " is" : "s are"} unavailable. Treat related gaps as unknowns.`}
           </p>
@@ -158,7 +158,7 @@ export default function DecisionBrief({ report, onCompare }: DecisionBriefProps)
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-[#718275]">
           Source timestamps, evidence records, limitations, and the full checklist remain available below. Source availability
-          and data completeness describe this report's coverage—not the property's quality, safety, legality, or value.
+          and data completeness describe this report's coverage—not the property&apos;s quality, safety, legality, or value.
         </p>
       </div>
     </section>
