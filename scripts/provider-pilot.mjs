@@ -119,6 +119,9 @@ for (const query of locations) {
     const configuredOverpassEndpoints = configuredOverpassList
       ? configuredOverpassList.split(/[;,]/).map((value) => value.trim()).filter(Boolean)
       : configuredOverpassSingle ? [configuredOverpassSingle] : [];
+    if (configuredOverpassEndpoints.length > 3) {
+      throw new Error("Configure at most three OVERPASS_API_URLS endpoints for a bounded pilot run.");
+    }
     const overpassEndpoints = configuredOverpassEndpoints.length
       ? configuredOverpassEndpoints
       : ["https://overpass-api.de/api/interpreter"];
