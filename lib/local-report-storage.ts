@@ -143,13 +143,3 @@ export function upsertStoredReport(value: unknown, report: LocationReport): Loca
   );
   return [report, ...remaining].slice(0, 20);
 }
-
-/** Save the latest report for a location, avoiding stale duplicate entries. */
-export function upsertStoredReport(value: unknown, report: LocationReport): LocationReport[] {
-  const normalizedLabel = report.location.label.trim().toLocaleLowerCase();
-  const remaining = parseStoredReports(value).filter((existing) =>
-    existing.id !== report.id &&
-    existing.location.label.trim().toLocaleLowerCase() !== normalizedLabel
-  );
-  return [report, ...remaining].slice(0, 20);
-}
