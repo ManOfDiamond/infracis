@@ -62,10 +62,10 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-bold text-[#153a2b]">Saved reports and exports</h2>
             <p className="mt-2 text-sm leading-7 text-[#53675a]">
-              The current product stores saved reports in this browser on this device using browser storage. Cloud sync, user accounts, and server-side report persistence are not available. Anyone with access to this browser profile may be able to access those saved reports. You can delete saved reports inside Infracis or clear this site's browser storage.
+              The current product stores saved reports in this browser on this device using browser storage. Cloud sync, user accounts, and server-side report persistence are not available. Anyone with access to this browser profile may be able to access those saved reports. You can delete saved reports inside Infracis or clear this site&apos;s browser storage.
             </p>
             <p className="mt-2 text-sm leading-7 text-[#53675a]">
-              Exporting a report downloads a JSON file to your device. After export, that file is under your device's storage and sharing controls.
+              Exporting a report downloads a JSON file to your device. After export, that file is under your device&apos;s storage and sharing controls.
             </p>
           </section>
 
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
               Weather and air-quality values are model estimates, not on-site sensor readings. OpenStreetMap features are community-mapped and may be missing or outdated. A missing mapped feature does not prove that a service is absent.
             </p>
             <p className="mt-2 text-sm leading-7 text-[#53675a]">
-              Infracis has not been deployed as part of this work. Before any public launch, the operator must verify the actual hosting environment's access logs, telemetry, backups, retention, and deletion settings and publish a final policy that reflects those settings.
+              Infracis has not been deployed as part of this work. Before any public launch, the operator must verify the actual hosting environment&apos;s access logs, telemetry, backups, retention, and deletion settings and publish a final policy that reflects those settings.
             </p>
           </section>
 
