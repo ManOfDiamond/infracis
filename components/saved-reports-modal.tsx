@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LocationReport } from "@/lib/types";
 import { Bookmark, Trash2, Download, X } from "lucide-react";
 
@@ -65,6 +65,8 @@ export default function SavedReportsModal({
 }: SavedReportsModalProps) {
   const [reports, setReports] = useState<LocationReport[]>([]);
   const [storageError, setStorageError] = useState("");
+  const dialogRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -76,6 +78,41 @@ export default function SavedReportsModal({
       setStorageError("Saved reports could not be read from this browser. You can still export a report from the analysis screen.");
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+        "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])"
+      )).filter((element) => element.offsetParent !== null);
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus();
+    };
+  }, [isOpen, onClose]);
 
   const handleDelete = (id: string) => {
     const updated = reports.filter((r) => r.id !== id);
@@ -93,6 +130,7 @@ export default function SavedReportsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="saved-reports-title"
@@ -107,6 +145,7 @@ export default function SavedReportsModal({
             </div>
           </div>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={onClose}
             aria-label="Close saved location reports"
