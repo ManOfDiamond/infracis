@@ -8,8 +8,8 @@ vi.mock("@/lib/providers/open-meteo", () => ({
   fetchAirQuality: vi.fn()
 }));
 
-import { POST as analyzePost } from "@/app/api/analyze/route";
-import { POST as comparePost } from "@/app/api/compare/route";
+import { POST as analyzePost } from "../app/api/analyze/route";
+import { POST as comparePost } from "../app/api/compare/route";
 import { geocodeLocation } from "@/lib/providers/nominatim";
 
 function post(path: string, body: string, headers: Record<string, string> = {}) {
