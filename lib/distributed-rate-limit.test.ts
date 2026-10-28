@@ -63,7 +63,7 @@ describe("shared rate limiter", () => {
     expect(command[0]).toBe("EVAL");
     expect(command[1]).toContain("math.max(now, nextAt)");
     expect(command[1]).toContain("redis.call('SET', KEYS[1]");
-    expect(command[4]).toBe("1100");
+    expect(command[5]).toBe("1100");
   });
 
   it("rejects a Nominatim slot that would wait beyond the bounded request budget", async () => {
