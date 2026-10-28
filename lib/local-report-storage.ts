@@ -58,14 +58,17 @@ function isAmenity(value: unknown): boolean {
 function isAmenities(value: unknown): boolean {
   if (value === null) return true;
   if (!isRecord(value) || !isRecord(value.byGroup) || !isRecord(value.nearest) || !Array.isArray(value.items)) return false;
+  const byGroup = value.byGroup;
+  const nearest = value.nearest;
+  const items = value.items;
   if (typeof value.totalCount !== "number" || !Number.isInteger(value.totalCount) || value.totalCount < 0) return false;
   if (typeof value.radiusMeters !== "number" || !Number.isFinite(value.radiusMeters) || value.radiusMeters < 0) return false;
   if (!["transit", "education", "healthcare", "essentials", "civic"].every((key) =>
-    typeof value.byGroup[key] === "number" && Number.isInteger(value.byGroup[key]) && (value.byGroup[key] as number) >= 0
+    typeof byGroup[key] === "number" && Number.isInteger(byGroup[key]) && (byGroup[key] as number) >= 0
   )) return false;
-  if (!value.items.every(isAmenity)) return false;
+  if (!items.every(isAmenity)) return false;
   return ["transit", "education", "healthcare", "essentials", "civic"].every((key) =>
-    value.nearest[key] === undefined || isAmenity(value.nearest[key])
+    nearest[key] === undefined || isAmenity(nearest[key])
   );
 }
 
