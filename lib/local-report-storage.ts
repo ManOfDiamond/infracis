@@ -1,6 +1,6 @@
 import type { LocationReport } from "./types";
 
-const classifications = new Set(["observed", "provider_model", "calculated", "model_interpretation", "unknown"]);
+const classifications = new Set(["observed", "provider_model", "calculated", "rule_based_interpretation", "unknown"]);
 const groups = new Set(["transit", "education", "healthcare", "essentials", "civic", "other"]);
 const priorities = new Set(["high", "medium", "low"]);
 const riskLevels = new Set(["neutral", "favorable", "caution"]);
