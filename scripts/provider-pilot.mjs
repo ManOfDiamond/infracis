@@ -28,6 +28,27 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const checks = [];
 let lastNominatimAt = 0;
 
+const configuredOverpassList = process.env.OVERPASS_API_URLS?.trim();
+const configuredOverpassSingle = process.env.OVERPASS_API_URL?.trim();
+const configuredOverpassEndpoints = configuredOverpassList
+  ? configuredOverpassList.split(/[;,]/).map((value) => value.trim()).filter(Boolean)
+  : configuredOverpassSingle ? [configuredOverpassSingle] : [];
+if (configuredOverpassEndpoints.length > 3) {
+  throw new Error("Configure at most three OVERPASS_API_URLS endpoints for a bounded pilot run.");
+}
+const overpassEndpoints = (configuredOverpassEndpoints.length
+  ? configuredOverpassEndpoints
+  : ["https://overpass-api.de/api/interpreter"]).map((endpoint) => {
+    let parsedEndpoint;
+    try {
+      parsedEndpoint = new URL(endpoint);
+    } catch {
+      throw new Error("OVERPASS_API_URLS must contain valid HTTPS URLs.");
+    }
+    if (parsedEndpoint.protocol !== "https:") throw new Error("OVERPASS_API_URLS must use HTTPS.");
+    return parsedEndpoint.toString();
+  });
+
 async function checkJson(url, options = {}, timeoutMs = 12_000) {
   const started = Date.now();
   try {
@@ -114,32 +135,10 @@ for (const query of locations) {
     };
 
     const overpassQuery = `[out:json][timeout:10];(nwr(around:1200,${lat},${lon})[amenity~"^(school|kindergarten|college|university|hospital|clinic|pharmacy|bank|atm|marketplace|supermarket|bus_station|police|fire_station|library|place_of_worship)$"];nwr(around:1200,${lat},${lon})[highway="bus_stop"];nwr(around:1200,${lat},${lon})[railway~"^(station|subway_entrance|tram_stop)$"];nwr(around:1200,${lat},${lon})[leisure~"^(park|playground)$"];);out center tags 100;`;
-    const configuredOverpassList = process.env.OVERPASS_API_URLS?.trim();
-    const configuredOverpassSingle = process.env.OVERPASS_API_URL?.trim();
-    const configuredOverpassEndpoints = configuredOverpassList
-      ? configuredOverpassList.split(/[;,]/).map((value) => value.trim()).filter(Boolean)
-      : configuredOverpassSingle ? [configuredOverpassSingle] : [];
-    if (configuredOverpassEndpoints.length > 3) {
-      throw new Error("Configure at most three OVERPASS_API_URLS endpoints for a bounded pilot run.");
-    }
-    const overpassEndpoints = configuredOverpassEndpoints.length
-      ? configuredOverpassEndpoints
-      : ["https://overpass-api.de/api/interpreter"];
     let overpass = null;
     const overpassAttempts = [];
-    for (const endpoint of overpassEndpoints.slice(0, 3)) {
-      let parsedEndpoint;
-      try {
-        parsedEndpoint = new URL(endpoint);
-      } catch {
-        overpassAttempts.push({ endpoint, ok: false, error: "Invalid endpoint URL" });
-        continue;
-      }
-      if (parsedEndpoint.protocol !== "https:") {
-        overpassAttempts.push({ endpoint, ok: false, error: "Endpoint must use HTTPS" });
-        continue;
-      }
-      const probe = await checkJson(parsedEndpoint.toString(), {
+    for (const endpoint of overpassEndpoints) {
+      const probe = await checkJson(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
@@ -149,14 +148,14 @@ for (const query of locations) {
       }, 7000);
       const elements = probe.ok && Array.isArray(probe.body?.elements) ? probe.body.elements : null;
       overpassAttempts.push({
-        endpoint: parsedEndpoint.toString(),
+        endpoint,
         ok: elements !== null,
         status: probe.status ?? null,
         elapsedMs: probe.elapsedMs,
         error: elements !== null ? null : probe.error ?? "Invalid or missing elements array"
       });
       if (elements !== null) {
-        overpass = { ...probe, endpoint: parsedEndpoint.toString(), elements };
+        overpass = { ...probe, endpoint, elements };
         break;
       }
     }
