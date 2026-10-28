@@ -39,7 +39,7 @@ describe("provider schema validation", () => {
     const options = fetchMock.mock.calls[0][1] as RequestInit;
     const body = options.body as URLSearchParams;
     const query = body.get("data") ?? "";
-    expect(query.match(/nwr\\(around:/g)).toHaveLength(4);
+    expect(query.split("nwr(around:")).toHaveLength(5);
     expect(query).toContain("[out:json][timeout:10]");
   });
 });
