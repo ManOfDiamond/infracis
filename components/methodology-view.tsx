@@ -41,7 +41,7 @@ export default function MethodologyView() {
               3. Rule-based Interpretation
             </span>
             <p className="mt-1 text-xs leading-relaxed text-purple-950">
-              Contextual explanations strictly grounded in retrieved evidence IDs. The engine refuses to cite evidence that was not present in the verified input payload.
+              Deterministic rule-based explanations assembled from retrieved evidence IDs. The engine refuses to cite evidence that was not present in the verified input payload. No LLM is called in this build.
             </p>
           </div>
 
