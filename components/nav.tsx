@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Shield, Scale, Bookmark, ExternalLink, MapPin, Sprout } from "lucide-react";
 
 interface NavProps {
@@ -19,7 +20,7 @@ export default function Nav({ activeTab, setActiveTab, onOpenSaved }: NavProps) 
   return (
     <header className="sticky top-0 z-40 border-b border-[#dce4d8] bg-[#f8f8f1]/95 shadow-[0_4px_24px_rgba(25,57,39,0.04)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <a href="/" aria-label="Infracis home" className="group flex w-fit items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8a23a] focus-visible:ring-offset-2">
+        <Link href="/" aria-label="Infracis home" className="group flex w-fit items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8a23a] focus-visible:ring-offset-2">
           <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#174b38] text-white shadow-sm transition-transform duration-200 group-hover:-rotate-2">
             <Shield size={21} strokeWidth={1.8} />
             <span className="absolute bottom-0 right-0 h-3 w-3 rounded-tl-lg bg-[#e8a23a]" aria-hidden="true" />
@@ -35,7 +36,7 @@ export default function Nav({ activeTab, setActiveTab, onOpenSaved }: NavProps) 
               <Sprout size={11} className="text-[#d99128]" /> Know the place before the property.
             </p>
           </div>
-        </a>
+        </Link>
 
         <nav aria-label="Main navigation" className="flex w-full flex-wrap items-center gap-1 rounded-2xl border border-[#e2e8dd] bg-white/80 p-1 sm:w-auto sm:justify-end">
           <button type="button" onClick={() => setActiveTab("analyze")} aria-pressed={activeTab === "analyze"} className={navClass("analyze")}>
