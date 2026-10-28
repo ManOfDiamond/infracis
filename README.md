@@ -23,7 +23,7 @@ The first release is not a property valuation engine, legal title verification s
 
 Property listings usually optimize discovery of properties. Infracis focuses on the location-specific questions a buyer needs to investigate before deciding: what is known, what could matter to my preferences, how current is the evidence, and what should I verify next?
 
-Existing products already offer real-estate analytics and location/risk layers. Infracis must differentiate through **auditable evidence, uncertainty-aware comparison, and actionable due-diligence gaps**, not simply by combining maps with an AI summary.
+Existing products already offer real-estate analytics and location/risk layers. Infracis must differentiate through **auditable evidence, uncertainty-aware comparison, and actionable due-diligence gaps**, not through unsupported AI claims.
 
 ## MVP scope
 
