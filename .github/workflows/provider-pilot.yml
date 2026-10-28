@@ -2,8 +2,6 @@ name: Live provider pilot
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ops/run-provider-pilot-once]
 
 permissions:
   contents: read
