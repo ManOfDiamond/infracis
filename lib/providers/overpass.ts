@@ -96,7 +96,7 @@ out center tags 100;`;
       const safeLon = validCoordinates ? itemLon : null;
       const distance = validCoordinates
           ? calculateHaversineDistance(lat, lon, safeLat!, safeLon!)
-          : radiusMeters;
+          : null;
 
       const name =
         elem.tags?.name ||
@@ -114,6 +114,9 @@ out center tags 100;`;
         lon: safeLon
       };
     })
+    // A record without a valid point/center cannot support a proximity claim.
+    // Do not assign it an invented distance or let it become the "nearest" result.
+    .filter((item) => item.distanceMeters !== null && item.lat !== null && item.lon !== null)
     .sort((a, b) => a.distanceMeters - b.distanceMeters);
 
   const byGroup = {
