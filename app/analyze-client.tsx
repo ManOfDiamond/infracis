@@ -9,6 +9,7 @@ import CompareView from "@/components/compare-view";
 import MethodologyView from "@/components/methodology-view";
 import SavedReportsModal, { saveReportToStorage, exportReportJson } from "@/components/saved-reports-modal";
 import Nav from "@/components/nav";
+import DecisionBrief from "@/components/decision-brief";
 import {
   MapPin,
   ArrowRight,
@@ -242,6 +243,9 @@ export default function AnalyzeClient() {
                   <p className="mt-2 text-xs text-[#718276]">Reports are stored in this browser on this device only. Cloud sync is not available.</p>
                   {saveError && <p role="alert" className="mt-2 text-xs text-rose-700">{saveError}</p>}
                 </div>
+
+                {/* Action-first decision summary, derived only from retrieved report data */}
+                <DecisionBrief report={report} onCompare={() => setActiveTab("compare")} />
 
                 {/* Interactive Map */}
                 <section>
