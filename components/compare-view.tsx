@@ -13,11 +13,17 @@ export default function CompareView() {
   const [data, setData] = useState<ComparisonReport | null>(null);
   const requestIdRef = useRef(0);
 
-  const setExample = (a: string, b: string) => {
-    setQueryA(a);
-    setQueryB(b);
+  const invalidateComparison = () => {
+    requestIdRef.current += 1;
+    setLoading(false);
     setData(null);
     setError("");
+  };
+
+  const setExample = (a: string, b: string) => {
+    invalidateComparison();
+    setQueryA(a);
+    setQueryB(b);
   };
 
   async function handleCompare(e: React.FormEvent) {
@@ -74,7 +80,7 @@ export default function CompareView() {
               maxLength={180}
               autoComplete="off"
               value={queryA}
-              onChange={(e) => setQueryA(e.target.value)}
+              onChange={(e) => { invalidateComparison(); setQueryA(e.target.value); }}
               placeholder="e.g. Koramangala, Bengaluru"
               required
               className="w-full rounded-2xl border border-[#dce3da] bg-[#fbfcf9] px-4 py-3 text-sm outline-none focus:border-[#104c38]"
@@ -91,7 +97,7 @@ export default function CompareView() {
               maxLength={180}
               autoComplete="off"
               value={queryB}
-              onChange={(e) => setQueryB(e.target.value)}
+              onChange={(e) => { invalidateComparison(); setQueryB(e.target.value); }}
               placeholder="e.g. HSR Layout, Bengaluru"
               required
               className="w-full rounded-2xl border border-[#dce3da] bg-[#fbfcf9] px-4 py-3 text-sm outline-none focus:border-[#104c38]"
@@ -108,7 +114,7 @@ export default function CompareView() {
                   key={p}
                   type="button"
                   aria-pressed={preference === p}
-                  onClick={() => setPreference(p)}
+                  onClick={() => { invalidateComparison(); setPreference(p); }}
                   className={`rounded-full px-3 py-1 text-xs font-medium capitalize transition ${
                     preference === p
                       ? "bg-[#104c38] text-white"
