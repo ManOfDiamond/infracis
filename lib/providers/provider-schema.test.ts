@@ -69,7 +69,8 @@ describe("provider schema validation", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({
       elements: [
         { id: 11, type: "node", lat: 28.614, lon: 77.209, tags: { highway: "bus_stop", name: "Mapped Bus Stop" } },
-        { id: 12, type: "node", tags: { amenity: "hospital", name: "Hospital With Missing Coordinates" } }
+        { id: 12, type: "node", tags: { amenity: "hospital", name: "Hospital With Missing Coordinates" } },
+        { id: 13, type: "node", lat: 28.7, lon: 77.4, tags: { amenity: "hospital", name: "Hospital Outside Requested Radius" } }
       ]
     }), { status: 200 })));
 
