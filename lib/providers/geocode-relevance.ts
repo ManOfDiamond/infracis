@@ -41,7 +41,7 @@ export function rankGeocodeCandidates(query: string, candidates: GeocodeCandidat
       const missingTokens = queryTokens.filter((token) => !matchedTokens.includes(token));
       // Numbers in locality queries often identify a specific sector, phase,
       // building, or postcode. Never accept a candidate that drops/changes one.
-      const missingNumericTokens = queryTokens.filter((token) => /\\d/.test(token) && !labelTokens.has(token));
+      const missingNumericTokens = queryTokens.filter((token) => /\d/.test(token) && !labelTokens.has(token));
       const score = missingNumericTokens.length > 0 ? 0 : matchedTokens.length / queryTokens.length;
       return { candidate, score, matchedTokens, missingTokens };
     })
