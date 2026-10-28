@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ComparisonReport, PreferenceProfile } from "@/lib/types";
 import { ArrowRight, LoaderCircle, Scale, CheckCircle, AlertCircle } from "lucide-react";
 
@@ -11,10 +11,13 @@ export default function CompareView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [data, setData] = useState<ComparisonReport | null>(null);
+  const requestIdRef = useRef(0);
 
   const setExample = (a: string, b: string) => {
     setQueryA(a);
     setQueryB(b);
+    setData(null);
+    setError("");
   };
 
   async function handleCompare(e: React.FormEvent) {
@@ -24,8 +27,10 @@ export default function CompareView() {
       return;
     }
 
+    const requestId = ++requestIdRef.current;
     setLoading(true);
     setError("");
+    setData(null);
 
     try {
       const res = await fetch("/api/compare", {
@@ -35,11 +40,13 @@ export default function CompareView() {
       });
       const payload = await res.json();
       if (!res.ok) throw new Error(payload.error || "Could not compare locations.");
+      if (requestId !== requestIdRef.current) return;
       setData(payload as ComparisonReport);
     } catch (err) {
+      if (requestId !== requestIdRef.current) return;
       setError(err instanceof Error ? err.message : "Failed to run comparison.");
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) setLoading(false);
     }
   }
 
