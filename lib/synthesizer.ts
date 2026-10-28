@@ -46,8 +46,8 @@ export function generateGroundedFindings(
       ),
       riskLevel: isClose ? "favorable" : "neutral"
     });
-  } else if (amenities) {
-    // A valid provider response with no mapped transit is different from an outage.
+  } else if (amenities && !amenities.resultLimitReached) {
+    // A valid, uncapped provider response with no mapped transit is different from an outage.
     findings.push({
       id: "fnd-transit-gap",
       headline: "Public Transit Access Unverified in Open Feeds",
