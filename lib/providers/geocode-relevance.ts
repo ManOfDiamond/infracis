@@ -48,7 +48,7 @@ export function rankGeocodeCandidates(query: string, candidates: GeocodeCandidat
 export function selectRelevantGeocodeCandidate(query: string, candidates: GeocodeCandidate[]): GeocodeCandidate | null {
   const ranked = rankGeocodeCandidates(query, candidates);
   const best = ranked[0];
-  if (!best || best.score < 0.6) return null;
+  if (!best || best.score < 0.75) return null;
 
   // If similarly ranked results resolve to different labels, don't silently
   // guess between them. The caller can ask the user for a more specific query.
