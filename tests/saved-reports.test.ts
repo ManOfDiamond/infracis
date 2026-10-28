@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseStoredReports } from "../components/saved-reports-modal";
+import { parseStoredReports } from "../lib/local-report-storage";
 
 function storedReport(id: string, label = `Location ${id}`) {
   return {
